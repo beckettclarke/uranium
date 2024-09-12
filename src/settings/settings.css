@@ -1,0 +1,13 @@
+body{
+  background:#232A2E;
+  display:grid;
+  grid-template-columns: 200px 1fr;
+  margin:0px;
+}
+
+#sidebar{
+  width:200px;
+  background:#1A2023;
+  height:100%;
+  display:flex;
+}
