@@ -1,5 +1,5 @@
 // const { ipc } = require('electron');
-var maxcams = 4;
+var maxcams = 8;
 function cl(m){
   console.log(m);
   var l = document.getElementById('logs')

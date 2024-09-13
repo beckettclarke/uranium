@@ -309,6 +309,10 @@ f{
   width:150px;
 }
 
+#camscreen{
+  overflow:hidden;
+}
+
 .camcat{
   font-weight:700;
   text-transform: uppercase;
@@ -326,12 +330,15 @@ f{
 #cambuttons button{
   text-align: left;
   transition:background-color .2s,color .2s;
+  white-space: nowrap; 
+  overflow:ellipsis;
 }
 
 
 button.cam.active{
   background-color:var(--theme);
   color:var(--base);
+  white-space: wrap;
 }
 
 #camscreen.activescreen{
@@ -342,7 +349,7 @@ button.cam.active{
 
 #cams{
   display:grid;
-  height:100%;
+  height:calc(100vh - 91px);
   overflow:hidden;
   gap:10px;
 }
@@ -358,7 +365,36 @@ button.cam.active{
 #cams[camcount="4"]{
   grid-template-columns: 1fr 1fr;
 }
+#cams[camcount="5"]{
+  grid-template-columns: repeat(6,1fr);
+}
 
+#cams[camcount="6"]{
+  grid-template-columns: repeat(3,1fr);
+}
+#cams[camcount="7"]{
+  grid-template-columns: repeat(12,1fr);
+}
+#cams[camcount="8"]{
+  grid-template-columns: repeat(4,1fr);
+}
+
+#cams[camcount="5"] cam{
+  grid-column: span 2;
+}
+#cams[camcount="5"] cam:first-child,#cams[camcount="5"] cam:nth-child(2){
+  grid-column: span 3;
+}
+
+
+#cams[camcount="7"] cam{
+  grid-column: span 3;
+}
+#cams[camcount="7"] cam:first-child,
+#cams[camcount="7"] cam:nth-child(2),
+#cams[camcount="7"] cam:nth-child(3) {
+  grid-column: span 4;
+}
 cam{
   border-radius:10px;
   overflow:hidden;
@@ -412,4 +448,45 @@ cam > span{
 .activecicon{
   background:var(--theme);
   color:var(--base);
+}
+
+.camloader{
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  display:flex;flex-direction: column;
+  gap:5px;
+  align-items: center;
+  justify-content: center;
+}
+.camloader > div{
+  width:150px;
+  height:7.5px;
+  background:#ffffff2d;
+  border-radius:100px;
+  position:relative;
+  overflow: hidden;
+}
+.camloader > div > div{
+  width:100%;
+  height:100%;
+  position:absolute;
+  background:white;
+  border-radius:100px;
+  animation:loadbar 1s ease-in-out infinite;
+}
+.camloader > span{
+  color:white;
+  font-weight:bold;
+}
+@keyframes loadbar{
+  0%{
+    left:-100%;
+  }
+  100%{
+    left:100%;
+  }
 }

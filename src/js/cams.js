@@ -11,12 +11,12 @@ function toggleCamView(t,u,n,i){
     var c = document.createElement('cam');
     c.setAttribute('name',n);
     c.setAttribute('uuid',i);
-    c.innerHTML='<video class="camvid" name="'+n+'" uuid="'+i+'"></video><span>'+n+'</span>';
+    c.innerHTML='<video class="camvid" name="'+n+'" uuid="'+i+'"></video><div class="camloader"><div><div></div></div><span luuid="'+i+'"></span></div><span>'+n+'</span>';
     // c.innerHTML='<iframe src="'+u+'" allowfullscreen></iframe>';
     document.getElementById('cams').appendChild(c);
     if (t === 'hls'){
       console.log('HLS with i of ' + i);
-      loadHLS(document.querySelector('video.camvid[uuid="'+i+'"]'),u)
+      loadHLS(document.querySelector('video.camvid[uuid="'+i+'"]'),u,document.querySelector('span[luuid="'+i+'"]'))
     }
   }
   var cb=document.querySelector('button[cuuid="'+i+'"]');
@@ -44,7 +44,7 @@ function addCamToList(n,t,i,u,uu){
   c.addEventListener('click',function(){toggleCamView(t,u,n,uu)});
   document.getElementById('cambuttons').appendChild(c);
 }
-function loadHLS(p, s) {
+function loadHLS(p,s,el) {
   console.log('Loading HLS Stream');
   console.log(p);
   if (Hls.isSupported()) {
@@ -53,9 +53,13 @@ function loadHLS(p, s) {
       console.log('❌ Video target not found');
     }
     var hls = new Hls();
-    hls.loadSource(s); // Replace with your actual .m3u8 link
+    el.innerHTML='Loading Source...';
+    hls.loadSource(s);
+    el.innerHTML='Attatching Media...';
     hls.attachMedia(p);
+    el.innerHTML='Fetching chunks...';
     hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      el.innerHTML='Loading...';
       p.play();
       console.log('✅ Loaded HLS Stream');
     });
@@ -77,7 +81,7 @@ function createCamEntry(){
   var u = document.getElementById('camurl').value;
   var uu = uuid();
   storeCamData(n,t,i,u,uu);
-  addCam(n,t,i,u,uu);
+  addCamToList(n,t,i,u,uu);
   cm();
 }
 
