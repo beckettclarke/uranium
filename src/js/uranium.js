@@ -187,6 +187,7 @@ function st(e){
 }
 
 function openmenu(l){
+  document.activeElement.blur();
   document.getElementById('menus').style.display=null;
   document.body.classList.add('dark');
   var m = document.querySelector('menu[menu="'+l+'"' );
@@ -203,7 +204,7 @@ function cm(){
   document.querySelector('.openmenu').classList.remove('openmenu');
 }
 
-document.getElementById('camtab').click();
+document.getElementById('internettab').click();
 
 // updateSettings();
 
@@ -214,3 +215,45 @@ function uuid() {
     return v.toString(16);
   });
 }
+
+setInterval(function(){
+  var bld = Math.random();
+  var bd = document.createElement('div');
+  bd.classList.add("bar");
+  bd.style.height = bld * 100 + "%";
+  bd.classList.add("barin");
+  var dlgraph = document.getElementById("dlgraph");
+  dlgraph.appendChild(bd);
+  // Upload graph
+  var blu = Math.random();
+  var bu = document.createElement('div');
+  bu.classList.add("bar");
+  bu.style.height = blu * 100 + "%";
+  bu.classList.add("barin");
+  var ulgraph = document.getElementById("ulgraph");
+  ulgraph.appendChild(bu);
+  document.getElementById("dlspeed").innerHTML=Math.round(10*(10+10*bld))/10;
+  document.getElementById("ulspeed").innerHTML=Math.round(10*(6+10*blu))/10;
+
+  if (dlgraph.children.length > 80) {
+    var dfirstBar = dlgraph.children[0];
+    dfirstBar.classList.add("barout");
+    setTimeout(function() {
+      dfirstBar.remove();
+    }, 600);
+  }
+  if (ulgraph.children.length > 80) {
+    var ufirstBar = ulgraph.children[0];
+    ufirstBar.classList.add("barout");
+    setTimeout(function() {
+      ufirstBar.remove();
+    }, 600);
+  }
+
+  setTimeout(function() {
+    bd.classList.remove("barin");
+    bu.classList.remove("barin");
+  }, 100);
+  
+},1000)
+

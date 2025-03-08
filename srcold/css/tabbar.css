@@ -1,0 +1,40 @@
+#tabbar{
+  -webkit-app-region: none !important;
+  margin-left:35px;
+  display:flex;
+  justify-content: space-around;
+  height:48px;
+  gap:25px;
+  user-select:none;
+}
+#tabbar tab{
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  gap:5px;
+  color:white;
+  align-content: center;
+  font-family:Satoshi;
+  font-weight:bold;
+  height:48px;
+  cursor:pointer;
+  transition:color .2s ease;
+} 
+
+#tabbar tab.activetab{
+    color:#3FFEFF;
+}
+#tabbar .tabsel{
+  display:block;
+  position:absolute;
+  margin:auto;
+  bottom:0px;
+  width:0px;
+  height:3px;
+  border-radius: 100px;
+  background:#3FFEFF;
+  transition:width .2s;
+}
+#tabbar tab.activetab .tabsel{
+  width:100px;
+}

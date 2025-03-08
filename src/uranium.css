@@ -1,6 +1,7 @@
 @import url("./res/fontawesome/all.min.css");
 @import url("./res/fonts/import.css");
 @import url("./css/settings.css");
+@import url("./css/gradient.css");
 @import url("./css/tabbar.css");
 *{
   font-family:var(--font);
@@ -18,6 +19,9 @@
     -moz-box-shadow: inset 0px 0px 58px -15px rgba(255,0,0,0.72);
     box-shadow: inset 0px 0px 58px -15px rgba(255,0,0,0.72);
   }
+}
+.gradient-bg{
+  opacity:.25;
 }
 body{
   --theme:var(--th,#3FFEFF);
@@ -103,8 +107,8 @@ header > i{
 }
 
 #windowtitle{
-  color:#3FFEFF;
-  font-family: JetBrains Mono;
+  color:white;
+  font-family: Satoshi;
 }
 
 screen{
@@ -241,8 +245,13 @@ f{
 .ddmenu:last-of-type .topdd{
   border-radius:0px 10px 10px 0px;
 }
-.activedd .topdd{
+
+.topdd:focus{
+  /* border: 2px solid red; */
   border-bottom-left-radius:0px !important;
+}
+.ddmenu:focus-within > .ddcontent{
+  display:block !important;
 }
 
 .ddcontent{
@@ -325,6 +334,7 @@ f{
   flex-direction: column;
   gap:3px;
   height:100%;
+  overflow-x:hidden;
   overflow-y:scroll;
 }
 #cambuttons button{
@@ -335,7 +345,7 @@ f{
 }
 
 
-button.cam.active{
+button.cam.activecam{
   background-color:var(--theme);
   color:var(--base);
   white-space: wrap;
@@ -418,7 +428,7 @@ cam > span{
   gap:10px;
   height:calc(100vh - 70px);
 }
-#camsidebar.disabled button:not(.active){
+#camsidebar.disabled button:not(.activecam){
   opacity:.5;
 }
 
@@ -489,4 +499,59 @@ cam > span{
   100%{
     left:100%;
   }
+}
+
+#ulspeed,#dlspeed{
+  font-weight:bold;
+}
+.hospan{
+  opacity:.85;
+  font-size:10px;
+}
+
+.graph{
+  display:flex;
+  grid-template-columns: repeat(55,1fr);
+  width:100%;
+  height:100px;
+  background:rgb(26, 26, 26);
+  gap:4px;
+  padding:20px;
+  box-sizing:border-box;
+  align-items: flex-end;
+  justify-content: end;
+}
+.graph > div.bar{
+  background:var(--theme);
+  border-radius:2px;
+  width:calc((100% - 320px) / 80);
+  margin-left:0px;
+  transition:height 1s ease,transform .5s ease,width .9s linear,margin-left .4s ease;
+}
+.graph > div.bar.barin{
+  height:0px !important;
+  width:0px;
+  margin-left:-4px;
+  transform: translateY(10px);
+}
+.graph > div.bar.barout{
+  transition:height 1s ease,transform .5s ease,width .6s ease;
+  /* height:0px !important; */
+  width:0px !important;
+  /* transform: translateY(10px); */
+}
+#dlgraph{
+  border-radius:10px 10px 0px 0px;
+  padding-bottom:5px;
+}
+#ulgraph{
+  padding-top:5px;
+  border-radius:0px 0px 10px 10px;
+  align-items: flex-start;
+}
+
+#networkusage{
+  bottom:10px;
+  position:absolute;
+  width:calc(100% - 15px);
 }

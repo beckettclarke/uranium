@@ -7,17 +7,18 @@ setTimeout(
 )
 
 function lm(t,m){
-  setTimeout(function(){document.getElementById('loadingtext').innerHTML=m},t)
+  setTimeout(function(){document.getElementById('loadingtext').innerHTML=m},t+2000)
 }
-lm(50,'Checking License...');
-lm(500,'Checking Connection...');
-lm(700,'Loading Themes...');
-lm(900,'Loading Settings...');
+lm(50,'Checking License');
+lm(500,'Checking Connection');
+lm(1700,'Loading Themes');
+lm(1900,'Loading Settings');
+lm(2200,'Checking cache');
 
 let incs = 59
-let ms = 1000;
+let ms = 5000;
 let counter = 1;
-let inc = 2750/incs;
+let inc = 2000/incs;
 
 const interval = setInterval(() => {
   lm(ms,`Loading Plugins... (${counter}/${incs})`);
@@ -29,4 +30,4 @@ const interval = setInterval(() => {
   }
 }, 1);
 
-lm(4000,'Opening...');
+lm(7500,'Opening...');

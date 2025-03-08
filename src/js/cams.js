@@ -23,7 +23,7 @@ function toggleCamView(t,u,n,i){
   var cbi=document.querySelector('button[cuuid="'+i+'"] > i');
   console.log(cb);
   console.log(cbi)
-  cb.classList.toggle('active');
+  cb.classList.toggle('activecam');
   cbi.classList.toggle('fas');
   cbi.classList.toggle('far');
   var cbi=document.querySelector('button[cuuid="'+i+'"] > i');

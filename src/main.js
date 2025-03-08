@@ -71,7 +71,8 @@ function createWindow () {
       mainWindow.on('leave-full-screen', () => {
         mainWindow.setWindowButtonVisibility(true);
       });
-    }, 5E1);
+    // }, 1E4);
+    }, 1E3);
   });
 }
 

@@ -14,6 +14,25 @@
     <!--<script defer src="preload.js"></script>-->
   </head>
   <body>
+    <div class="gradient-bg">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+            <feBlend in="SourceGraphic" in2="goo" />
+          </filter>
+        </defs>
+      </svg>
+      <div class="gradients-container">
+        <div class="g1"></div>
+        <div class="g2"></div>
+        <div class="g3"></div>
+        <div class="g4"></div>
+        <div class="g5"></div>
+        <div class="interactive"></div>
+      </div>
+    </div>
     <div id="glow"></div>
     <header>
       <i class="fas fa-planet-ringed"></i>
@@ -58,7 +77,7 @@
     </screen>
     <screen id="internetscreen">
       <div class="categorybuttons">
-        <div class="ddmenu activedd">
+        <div class="ddmenu">
           <button class="topdd"><i class="fas fa-circle-nodes"></i> IP Address</button>
           <div class="ddcontent">
             <button onclick="openmenu('myip')"><i class="fas fa-user-magnifying-glass"></i>My IP</button>
@@ -71,9 +90,26 @@
         </div>
         
       </div>
-      <h1><i class="fas fa-globe"></i> Internet</h1>
-      <button onclick="openmenu('iplookup')"><i class="fas fa-magnifying-glass-location"></i> IP Lookup</button>
-      <button onclick="openmenu('packetspam')"><i class="fas fa-tower-cell"></i> Packet bomb</button>
+      <div id="networkusage">
+        <div id="topbar">
+          <i class="fas fa-arrow-down"></i>
+          <span id="dlspeed">18.2</span>
+          <span class="hospan" style="margin-right:15px">MB/s</span>
+          <i class="fas fa-arrow-up"></i>
+          <span id="ulspeed">10.4</span>
+          <span class="hospan">MB/s</span>
+        </div>
+        <div id="dlgraph" class="graph">
+          <div class="bar" style="height:100%"></div>
+          <div class="bar" style="height:76%"></div>
+          <div class="bar" style="height:19%"></div>
+        </div>
+        <div id="ulgraph" class="graph">
+          <div class="bar" style="height:100%"></div>
+          <div class="bar" style="height:76%"></div>
+          <div class="bar" style="height:19%"></div>
+        </div>
+      </div>
     </screen>
     <!-- ===== [ Menus ] =================== -->
     <menus id="menus" style="display:none;">
@@ -102,6 +138,26 @@
       </menu>
       <!-- -->
       <menu title="Add Camera" icon="camera-cctv" menu="addcam">
+        Name: <input type="text" id="camname" placeholder="Camera Name"><br>
+        URL: <input type="text" id="camurl" placeholder="Camera URL"><br>
+        Type: 
+        <select id="camtype">
+          <option value="hls">HLS/m3u8</option>
+          <option value="embed">Embed</option>
+          <option value="prerec">Prerec AV</option>
+        </select><br>
+        Icon:
+        <div id="camicons">
+          <button class="camiconsel activecicon" icon="video" onclick="switchClass(this,'activecicon')"><i class="fas fa-video"></i></button>
+          <button class="camiconsel" icon="camera-cctv" onclick="switchClass(this,'activecicon')"><i class="fas fa-camera-cctv"></i></button>
+          <button class="camiconsel" icon="camera" onclick="switchClass(this,'activecicon')"><i class="fas fa-camera"></i></button>
+          <button class="camiconsel" icon="webcam" onclick="switchClass(this,'activecicon')"><i class="fas fa-webcam"></i></button><br>
+        </div><br>
+        <button class="fw-button" id="myipreload" onclick="createCamEntry()">Add Camera</button>
+      </menu>
+      <!-- -->
+      <menu title="Manage Cameras" icon="bars" menu="managecams">
+        <button class="fw-button" id="myipreload" onclick="pushNewCams()">Add preset cams</button><br>
         Name: <input type="text" id="camname" placeholder="Camera Name"><br>
         URL: <input type="text" id="camurl" placeholder="Camera URL"><br>
         Type: 
