@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Uranium</title>
+    <link rel="stylesheet" href="uranium.css" />
+    <script defer src="uranium.js"></script>
+    <script defer src="tools.js"></script>
+    <style id="themecolour"></style>
+    <style id="themefont"></style>
+
+    <!--<script defer src="preload.js"></script>-->
+  </head>
+  <body>
+    <header>
+      <i class="fas fa-planet-ringed"></i>
+      <sv s="windowtitle">Window title</sv>
+      <div id="topbuttons">
+        <button onclick="settingsMenu();" id="settingsbutton">
+          <i class="fas fa-cog"></i>
+        </button>
+        <button id="profilebutton">
+          <i class="fas fa-user"></i>
+        </button>
+      </div>
+    </header>
+    <div id="tabbar">
+      <tab class="activetab" id="hometab" onclick="st(this)">
+        <i class="fas fa-home"></i> Home
+        <div class="tabsel"><div></div></div>
+      </tab>
+      <tab id="networktab" onclick="st(this)">
+        <i class="fas fa-network-wired"></i> Network
+        <div class="tabsel"><div></div></div>
+      </tab>
+      <tab id="internettab" onclick="st(this)">
+        <i class="fas fa-globe"></i> Internet
+        <div class="tabsel"><div></div></div>
+      </tab>
+      <tab id="networktab" onclick="st(this)">
+        <i class="fas fa-folder-open"></i> Files
+        <div class="tabsel"><div></div></div>
+      </tab>
+    </div>
+    
+    <!-- ===== [ Screens ] =================== -->
+    <screen class="activescreen" id="homescreen">
+      <h1><i class="fas fa-planet-ringed"></i> Welcome to Uranium, <sv s="name"></sv></h1>
+      <p>Welcome to your Electron application., <sv s="name"></sv>  {app_name}</p>
+      
+      we<br>are<br>sitting<br>in<br>the<br>marcel<br>tree<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e<br>e
+    </screen>
+    <screen id="networkscreen">
+      <h1>Network</h1>
+      <p>Network settings and information</p>
+    </screen>
+    <screen id="internetscreen">
+      <div class="categorybuttons">
+        <div class="ddmenu activedd">
+          <button class="topdd"><i class="fas fa-circle-nodes"></i> IP Address</button>
+          <div class="ddcontent">
+            <button onclick="openmenu('iplookup')">IP Lookup</button>
+            <button onclick="openmenu('packetspam')">Packet bomb</button>
+          </div>
+        </div>
+        <div class="ddmenu">
+          <button class="topdd"><i class="fas fa-info-circle"></i> Info</button>
+        </div>
+        
+      </div>
+      <h1><i class="fas fa-globe"></i> Internet</h1>
+      <button onclick="openmenu('iplookup')"><i class="fas fa-magnifying-glass-location"></i> IP Lookup</button>
+      <button onclick="openmenu('packetspam')"><i class="fas fa-tower-cell"></i> Packet bomb</button>
+    </screen>
+    <!-- ===== [ Menus ] =================== -->
+    <menus id="menus" style="display:none;">
+      <menu title="IP Lookup" icon="magnifying-glass-location" menu="iplookup">
+        <input type="text" placeholder="IP Address" id="iplookupfield">
+        <button id="ipbmain" onclick="lookupIP()">Lookup</button>
+        <button id="ipbload" style="display:none; width:70px"><i class="fas fa-spinner-third fa-spin"></i></button>
+        <div id="iplookupresult" style="display:none;">
+          IP: <f f="ip"></f><br>
+          Country: <f f="country"></f><br>
+          City: <f f="city"></f>, <f f="region"></f><br>
+          Postal: <f f="postal"></f><br>
+          Latitude: <f f="latitude"></f><br>
+          Longitude: <f f="longitude"></f><br>
+          ORG: <f f="org"></f><br>
+          ISP: <f f="isp"></f><br>
+          ASN: <f f="asn"></f><br>
+          Timezone: <f f="timezone"></f><br>
+        </div>
+      </menu>
+    </menus>
+    <!-- ===== [ Settings menu ] =================== -->
+    <div class="container" id="settingsContainer">
+      <div class="window" id="settingsWindow">
+        <div class="sidebar" id="settingsSidebar">
+          <button onclick="closeSettings()"><i class="fas fa-arrow-left"></i> Back</button>
+          <div>
+            <div class="separator">General</div>
+            <button onclick="switchSetting(this)" class="row active"><i class="fas fa-cog"></i> General</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-rectangle-terminal"></i> Shell</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-globe"></i> Network</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-folder-open"></i> Files</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-palette"></i> Customization</button>
+            <div class="separator">Integrations</div>
+            <!-- <button onclick="switchSetting(this)" class="row"><i class="fab fa-node-js"></i> NPM + Node.JS</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fab fa-yarn"></i> Yarn</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-beer"></i> Homebrew</button> -->
+            <button onclick="switchSetting(this)" class="row"><i class="fab fa-python"></i> Python</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fab fa-docker"></i> Docker</button>
+            <div class="separator">App</div>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-info-circle"></i> App Info</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-wrench"></i> Debug</button>
+            <button onclick="switchSetting(this)" class="row"><i class="fas fa-sparkles"></i> What's New</button>
+          </div>
+        </div>
+        <div class="menus" id="settingsMenus">
+          <div class="menu activeMenu" menu="General">
+            <h1>Profile</h1>
+            Name <input placeholder="Name" setting="name"><br>
+            Email <input type="email" placeholder="Email" setting="email"><br>
+            <button class="toggle" setting="privatemode"></button> Private mode (Hides sensitive info)
+            <h1>App</h1>
+            <button class="toggle" setting="launchonstart"></button> Enable Launch Daemon
+            <sinfo>Increases launch speed by running some operations at login</sinfo>
+            <button class="toggle" setting="gpuaccel"></button> GPU Accelleration<br>
+            <button class="toggle" setting="advancerender"></button> Advanced rendering mode<br>
+            <button class="toggle" setting="legacyoptions"></button> Enable legacy options<br>
+            <button class="toggle" setting="safemode"></button> Safe mode<br>
+            <sinfo>Prevents you from performing potentially dangerous actions</sinfo>
+            <button class="toggle" setting="requireverification"></button> Require verification<br>
+            <sinfo>Performs verification before completing an action. Prevents backdoors but slows down general usage.</sinfo>
+          </div>
+          <div class="menu" menu="Shell">
+            <h1>Startup</h1>
+            Default shell <input type="text" setting="defaultshell" placeholder="zsh"><br>
+            Startup command <input type="text" setting="startcmd" placeholder="echo '$(pwd) - $(date)'"><br>
+            <button class="toggle" setting="launchwithshell"></button> Launch shell on app launch<br>
+            <h1>Performance</h1>
+            Max threads <input type="number" setting="maxthreads" placeholder="16"><br>
+            Operation timeout (s) <input type="number" setting="maxtimeout" placeholder="15"><br>
+            <button class="toggle" setting="allowextracpu"></button> Allow increased CPU usage<br>
+            <button class="toggle" setting="hardwareaccel"></button> Hardware accelleration <flag>BETA</flag><br> 
+            <h1>Features</h1>
+            <button class="toggle" setting="autodependency"></button> Automatically install dependencies<br>
+            <button class="toggle" setting="autocleanshell"></button> Cleanup files on code 0<br>
+            <button class="toggle" setting="cachebinaries"></button> Cache binaries<br>
+            <button class="toggle" setting="prunefiles"></button> Prune old files<br>
+            <button class="toggle" setting="retrywitholdbins"></button> Retry with older binaries<br>
+            <h1>Integrations</h1>
+            <button class="toggle" setting="npmint"></button> NPM/NodeJS integration<br>
+            <button class="toggle" setting="brewint"></button> Homebrew integration<br>
+            <button class="toggle" setting="yarnint"></button> Yarn integration<br>
+            <button class="toggle" setting="pythonint"></button> Python integration <flag>Experimental</flag><br>
+          </div>
+          <div class="menu" menu="Profile">
+          </div>
+          <div class="menu" menu="Network">
+            <h1>Ports</h1>
+            <input type="number" setting="defaultport" placeholder="4000"> Default port<br>
+            <input type="number" setting="outgoingport" placeholder="5000"> Outgoing port<br>
+            <input type="number" setting="videoport" placeholder="6000"> Video feed port<br>
+            <input type="number" setting="smtpport" placeholder="1888"> SMTP port<br>
+            <h1>Security</h1>
+            <button class="toggle" setting="blockunknown"></button> Block unknown connections<br>
+            <button class="toggle" setting="requirevpn"></button> Require VPN Connection<br>
+            <button class="toggle" setting="hideip"></button> Hide IP when possible<br>
+            <button class="toggle" setting="preferlan"></button> Prefer LAN over WLAN<br>
+            <button class="toggle" setting="preferdoh"></button> Use DNS over HTTPS (DoH)<br>
+            <button class="toggle" setting="disablehttp"></button> Disable HTTP connections<br>
+            <h1>Limits</h1>
+            Max connections <input type="number" setting="maxconnections" placeholder="10"><br>
+            <input type="number" setting="maxoutgoing" placeholder="1024"> Outgoing bandwidth (MB, 0=Uncapped)<br>
+            <input type="number" setting="maxincoming" placeholder="2048"> Incoming bandwidth (MB, 0=Uncapped)<br>
+            <input type="number" setting="maxoutspeed" placeholder="500"> Outgoing speed (kbps, 0=Uncapped)<br>
+            <input type="number" setting="maxinspeed" placeholder="500"> Incoming speed (kbps, 0=Uncapped)<br>
+            <h1>VPN & DNS</h1>
+            <button class="toggle" setting="restrictvpntoknown"></button> Restrict VPN to known servers<br>
+            <button class="toggle" setting="restrictvpnlocation"></button> Restrict VPN to other countries<br>
+            <button class="toggle" setting="encrypttorrenttraffic"></button> Encrypt torrent traffic on VPN<br>
+            <input type="text" setting="dnsserver" placeholder="dns.adguard-dns.com/dns-query"> DNS Query Server<br>
+            <input type="text" setting="dnsfallback" placeholder="94.140.14.14"> Fallback DNS<br>
+          </div>
+          <div class="menu" menu="Files">
+            <h1>Directories</h1>
+            <input type="text" setting="workingdir" placeholder="~/.uranium/work"> Working directory<br>
+            <input type="text" setting="cachedir" placeholder="/tmp/"> Cache directory<br>
+            <input type="text" setting="packagedir" placeholder="~/.uranium/packages"> Package directory<br>
+            <button class="toggle" setting="showhidden"></button> Show hidden files<br>
+            <h1>Cache</h1>
+            <input type="number" setting="maxcachesize" placeholder="1024"> Max cache size (MB)<br>
+            <input type="number" setting="maxcacheage" placeholder="10"> Max cache age (Days)<br>
+            <button class="toggle" setting="keepoldbinaries"></button> Keep old binaries<br>
+            <button class="toggle" setting="cleandirectories"></button> Clean up directories<br>
+            <h1>Archives</h1>
+            <button class="toggle" setting="tgzovertargz"></button> Use .tgz instead of .tar.gz<br>
+            <button class="toggle" setting="splitbigarchives"></button> Split large archives into smaller files<br>
+            <input type="number" setting="maxarchivesize" placeholder="5"> Max archive split size (GB)<br>
+            <h1>Backups</h1>
+            <button class="toggle" setting="backups"></button> Enable Uranium Backups<br>
+            <input type="number" setting="maxbackupsize" placeholder="500"> Max backup storage (MB)<br>
+            <input type="number" setting="backupfrequency" placeholder="1"> Backup frequency (Hrs)<br>
+            <button class="toggle" setting="backupcache"></button> Include cache<br>
+            <button class="toggle" setting="backupoldbinaries"></button> Include old binaries<br>
+            <button class="toggle" setting="backupbinaries"></button> Include current binaries<br>
+          </div>
+          <div class="menu" menu="Customization">
+            <h1>Colour</h1>
+            Theme colour: <input type="color" setting="theme"><br>
+            <button class="toggle" setting="bgcol"></button> Theme affects background<br>
+            <button class="toggle" setting="lightmode"></button> Light mode <flag>DANGER</flag>
+            <h1>Fonts</h1>
+            Interface font: <input type="text" setting="font"><br>
+            Code font: <input type="text" setting="codefont"><br>
+            <button class="toggle" setting="boldfont"></button> Bold font
+            <h1>Texts</h1>
+            <input type="text" setting="windowtitle" oninput="document.title=this.value"> Window title<br>
+            <i class="fas fa-planet-ringed" id="iconpreview"></i> <input type="text" setting="windowicon" oninput=""> Window icon (Font Awesome)<br>
+          </div>
+          <div class="menu" menu="Python">
+            <input type="text" setting="pyinterpreter" placeholder="/usr/local/bin/python3"> Python interpreter<br>
+            <button class="toggle" setting="pyscriptoverride"></button> Allow override with #! in script<br>
+            <button class="toggle" setting="pydebugparser"></button> Debug parser output<br>
+            <button class="toggle" setting="pyverboseimport"></button> Verbose import<br>
+            <button class="toggle" setting="pyinteractivemode"></button> Interactive mode after script<br>
+            <button class="toggle" setting="pyoptimizebytecode"></button> Optimize bytecode<br>
+            <button class="toggle" setting="pydisablesiteimport"></button> Disable import of site.py<br>
+            <button class="toggle" setting="pychecktabconsistency"></button> Enable TAB Consistency checking<br>
+            <input type="text" setting="pyflags" placeholder=""> Other flags
+          </div>
+          <div class="menu" menu="Docker">
+            <h1>General</h1>
+            <button class="toggle" setting="dockerintegratedterminal"></button> Prefer integrated terminal<br>
+            <sinfo>Determines which terminal is launched when opening the terminal from a container</sinfo>
+            <button class="toggle" setting="dockervminbackup"></button> Include VM in Time Machine backups<br>
+            <button class="toggle" setting="dockerusecontainerd"></button> Use containerd for pulling/storing images<br>
+            <sinfo>Use this if you need support for multi-platform images, image lazy-loading, or Wasm. Only images and containers in the active image store are visible. All your other containers and images still exist. To see them again, turn off this feature.</sinfo>
+            <button class="toggle" setting="dockervirtframework"></button> Use virtualization framework<br>
+            <sinfo>Uses Virtualization framework for creating and managing Docker Desktop Linux VM in macOS 12.5 and above.</sinfo>
+            <button class="toggle" setting="dockerprefervirtiofs"></button> Use VirtioFS over gRPC FUSE<br>
+            <sinfo>VirtioFS brings improved I/O performance for operations on bind mounts. Enabling VirtioFS will automatically enable Virtualization framework. Available in macOS 12.5 and above</sinfo>
+            <button class="toggle" setting="dockersbomindex"></button> SBOM Indexing<br>
+            <h1>Resources</h1>
+            <input type="number" setting="dockercpulimit" placeholder="8"> CPU limit<br>
+            <input type="number" setting="dockermemlimit" placeholder="4"> Memory limit (GB)<br>
+            <input type="number" setting="dockerswap" placeholder="1"> Swap (GB)<br>
+            <input type="number" setting="dockerdisksize" placeholder="64"> Virtual disk size(GB)<br>
+            <h1>Extensions</h1>
+            <button class="toggle" setting="dockerextensions"></button> Enable Docker Extensions
+            <sinfo>Turning this option off will uninstall all extensions and disable all extension features.</sinfo>
+            <button class="toggle" setting="dockerextfrommarketplace"></button> Allow only extensions distributed through the Docker Marketplace
+            <sinfo>This will prevent the ability to install any other extension via the Extension SDK tools.</sinfo>
+            <button class="toggle" setting="dockershowextensions"></button> Show Docker Extensions system containers
+            <sinfo>Show Docker Desktop Extensions internal containers when using Docker commands.</sinfo>
+          </div>
+          <div class="menu" menu="App Info">
+            <h1><i class="fas fa-planet-ringed"></i> Uranium 2.2.3</h1>
+            Electron <flag>29.1.4</flag><br>
+            Chromium <flag>122.0.6261.129</flag>
+            
+            <h1>Packages</h1>
+            ├── @electron-forge/cli@7.3.0<br>
+            ├── @electron-forge/core@7.3.0<br>
+            ├── @electron-forge/maker-deb@7.3.0<br>
+            ├── @electron-forge/maker-rpm@7.3.0<br>
+            ├── @electron-forge/maker-squirrel@7.3.0<br>
+            ├── @electron-forge/maker-zip@7.3.0<br>
+            ├── @electron-forge/plugin-auto-unpack-natives@7.3.0<br>
+            ├── @electron-forge/plugin-fuses@7.3.0<br>
+            ├── @electron/fuses@1.7.0<br>
+            ├── electron-squirrel-startup@1.0.0<br>
+            ├── electron-store@8.2.0<br>
+            ├── electron@29.1.4<br>
+            └── update-electron-app@3.0.0<br>
+          </div>
+          <div class="menu" menu="Debug">
+            <h1>Settings</h1>
+            <button onclick="resetSettings(this);">Reset <flag>DANGER</flag></button>
+            <button onclick="importSettings(this);">Import from file</button>
+            <button onclick="exportFile(JSON.stringify(settings),'Uranium Settings.json');cl('📂 Exported Settings');">Export to file</button>
+            <h1>Logs</h1>
+            <div id="logs">
+              <log>
+                <ic>🪐</ic>
+                <time>uranium.main @ launch</time>
+                <desc>Opening Uranium</desc>
+              </log>
+            </div>
+            <button onclick="exportLogs()">Export Logs</button>
+            <button onclick="cl('🧪 Test log')">Test Log</button>
+            <button class="toggle" setting="autoscroll"></button> Autoscroll
+          </div>
+          <div class="menu" menu="What's New">
+            <h1>Uranium v2</h1>
+            <li>New splash screen</li>
+            <li>Settings menu redesign</li>
+            <li>More icons everywhere</li>
+            <li>New file menu</li>
+            <li>Auto-updates (Finally)</li>
+            <!-- -->
+            <h1>1.4.1</h1>
+            <li>Bug fixes (As always)</li>
+            <li>Fixed a few typos</li>
+            <li>App opens faster now</li>
+            <!-- -->
+            <h1>1.4</h1>
+            <li>New logo</li>
+            <li>New Server menu</li>
+            <li>Updated Electron</li>
+            <li>Custom shell support</li>
+            <!-- -->
+            <h1>1.3</h1>
+            <li>New tab layout</li>
+            <li>Added lifetime purchase option</li>
+            <li>3 new utilities</li>
+            <!-- -->
+            <h1>1.2.2</h1>
+            <li>Added Intel (x64) compatibility</li>
+            <li>Improved smoothness when emulated</li>
+            <!-- -->
+            <h1>1.2.1</h1>
+            <li>Fixed more bugs</li>
+            <li>App opens 30% faster</li>
+            <!-- -->
+            <h1>1.2</h1>
+            <li>Upated Electron</li>
+            <li>New macOS icon</li>
+            <li>Added network camera support
+            </li>
+            <!-- -->
+            <h1>1.1.1</h1>
+            <li>Fixed some bugs</li>
+            <!-- -->
+            <h1>1.1</h1>
+            <li>Added WiFi info</li>
+            <li>Added devices tab</li>
+            <li>Added settings</li>
+            <!-- -->
+            <h1>1.0</h1>
+            <li>First release</li>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div id="darkOverlay"></div>
+  </body>
+</html>

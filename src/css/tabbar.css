@@ -1,0 +1,26 @@
+#tabbar{
+  display:flex;
+  width:100vw;
+  justify-content: space-around;
+  height:25px;
+  border-bottom:1px solid var(--base);
+  user-select:none;
+}
+#tabbar tab{
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  gap:5px;
+  color:var(--text);
+  align-content: center;
+  font-family:var(--font);
+  height:35px;
+  width:100%;
+  background:var(--lbg);
+  border-bottom:1px solid var(--base);
+  cursor:pointer;
+} 
+
+#tabbar tab.activetab{
+  border-bottom:2px solid var(--text);
+}
